@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import reportgenerator.ExtentFactory;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 
 @Page
@@ -25,7 +26,7 @@ public class CartPage extends AbstractComponents {
 
     By cartItem2=By.xpath("//td[normalize-space()='Funny Cow']");
 
-    By cartItemQty=By.xpath("//input[@value='1']");
+    By cartItem1Qty=By.xpath("//input[@value='1']");
 
     By cartItem2Qty=By.xpath("//input[@value='2']");
 
@@ -58,6 +59,30 @@ public class CartPage extends AbstractComponents {
                         .log(Status.FAIL,"Validation failed");
             }
 
+        ArrayList<String> expectedCartItemsQty = new ArrayList<String>();
+            expectedCartItemsQty.add(String.valueOf(1));
+            expectedCartItemsQty.add(String.valueOf(2));
 
+        ArrayList<String> actualCartItemsQty = new ArrayList<String>();
+
+            WebElement cart1Qty= DriverFactory.getInstance().getDriverThreadLocal().findElement(cartItem1Qty);
+            Thread.sleep(2000);
+            WebElement cart2Qty=DriverFactory.getInstance().getDriverThreadLocal().findElement(cartItem2Qty);
+            Thread.sleep(2000);
+
+            if(cart1Qty.isDisplayed()){
+                actualCartItemsQty.add(cart1Qty.getAttribute("value"));
+            } if(cart1Qty.isDisplayed()){
+                actualCartItemsQty.add(String.valueOf(cart2Qty.getAttribute("value")));
+        }
+
+            try{
+                Assert.assertEquals(expectedCartItemsQty,actualCartItemsQty);
+                ExtentFactory.getInstance().getExtent()
+                        .log(Status.PASS,"Cart Items Quantity validated");
+        }catch (Exception e){
+                ExtentFactory.getInstance().getExtent()
+                        .log(Status.FAIL,"Carts Items Quantity validation failed due to"+e);
+            }
     }
 }

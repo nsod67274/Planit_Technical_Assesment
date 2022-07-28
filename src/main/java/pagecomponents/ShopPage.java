@@ -27,6 +27,10 @@ public class ShopPage extends AbstractComponents {
 
     By cart=By.cssSelector("li#nav-cart > a");
 
+    By funnyCowQty=By.xpath("//input[@value='2']");
+
+    By fluffyBunnyQty=By.xpath("//input[@value='1']");
+
 
     public void shopItems() throws InterruptedException {
     click(shopLnk,"Accessing shop Link", 30);
@@ -34,6 +38,8 @@ public class ShopPage extends AbstractComponents {
     click(buyFluffyBunnyBtn,"selecting Fluffy Bunny", 30);
     Thread.sleep(3000);
     click(buyFunnyCowBtn,"Selecting Funny Cow",30);
+    Thread.sleep(3000);
+    click(buyFunnyCowBtn,"selecting Funny Cow second time",30);
     Thread.sleep(3000);
     }
 
